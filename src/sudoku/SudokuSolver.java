@@ -1,80 +1,100 @@
 package sudoku;
 
-public class SudokuSolver implements Solver{
+public interface SudokuSolver {
+    /**
+     * To be done
+     */
+    boolean solve();
 
-    private int[] board = new int[81];
+    /**
+     * Puts digit in the box x, col.
+     *
+     * @param x     The row
+     * @param y     The column
+     * @param digit The digit to insert
+     * @throws IllegalArgumentException if x, y or digit is outside the range [0,9]
+     */
+    void add(int x, int y, int digit);
 
-    @Override
-    public boolean solve() {
-        return false;
-    }
+    /**
+     * Removes digit in box at x, y.
+     *
+     * @param x The row
+     * @param y The column
+     * @throws IllegalArgumentException if x or y is outside the range [0,9]
+     */
+    void remove(int x, int y);
 
-    @Override
-    public void add(int row, int col, int digit) {
-        if (row < 0 || row > 8){
-            throw new IllegalArgumentException("illegal row input");
-        }
-        else if(col < 0 || col > 8 ){
-            throw new IllegalArgumentException("illegal col input");
-        }
-        else if(digit < 0 || digit > 9 ){
-            throw new IllegalArgumentException("illegal digit input");
-        }
+    /**
+     * Returns the value of the box at x, y. 0 if empty.
+     *
+     * @param x The row
+     * @param y The column
+     * @return the value of the box at x, y. 0 if empty
+     * @throws IllegalArgumentException if x or y is outside the range [0,9]
+     */
+    int get(int x, int y);
 
-        board[coordsToBoard(row,col)] = digit;
-    }
+    /**
+     * Checks that all filled in digits follows the sudoku rules.
+     *
+     * @return true if all boxes comply to the rules
+     */
+    boolean isValid();
 
-    @Override
-    public void remove(int row, int col) {
-        if (row < 0 || row > 8){
-            throw new IllegalArgumentException("illegal row input");
-        }
-        else if(col < 0 || col > 8 ){
-            throw new IllegalArgumentException("illegal col input");
-        }
+    /**
+     * Checks that given box follows the sudoku rules.
+     *
+     * @param x The row
+     * @param y The column
+     * @return true if box at x,y complies with the rules
+     */
+    boolean isValid(int x, int y);
 
-        board[coordsToBoard(row,col)] = 0;
-    }
+    /**
+     * Sets all boxes to 0
+     */
+    void clear();
 
-    @Override
-    public int get(int row, int col) {
-        if (row < 0 || row > 8){
-            throw new IllegalArgumentException("illegal row input");
-        }
-        else if(col < 0 || col > 8 ){
-            throw new IllegalArgumentException("illegal col input");
-        }
+    /**
+     * Fills the grid with the digits in m. The digit 0 represents an empty box.
+     *
+     * @param m the matrix with the digits to insert
+     * @throws IllegalArgumentException if board has the wrong size or contains values outside the range [0,9]
+     */
+    void setMatrix(int[][] m);
 
-        return board[coordsToBoard(row,col)];
-    }
+    /**
+     * Returns the board as a 9X9 matrix.
+     *
+     * @return the board as a 9X9 matrix
+     */
+    int[][] getMatrix();
 
-    @Override
-    public boolean isValid() {
-        return false;
-    }
+    /**
+     * Returns an array with all values in the region.
+     *
+     * @param x The row
+     * @param y The column
+     * @return an array with all values in the region
+     */
+    int[] getBelongingRegion(int x, int y);
 
-    @Override
-    public void clear() {
-        board = new int[81];
-    }
+    /**
+     * Returns an array with all the values in the row.
+     *
+     * @param y The column
+     * @return an array with all the values in the row
+     */
+    int[] getBelongingRow(int y);
 
-    @Override
-    public void setBoard(int[] board) {
+    /**
+     * Returns an array with all the values in the column.
+     *
+     * @param x The row
+     * @return an array with all the values in the row
+     */
+    int[] getBelongingColumn(int x);
 
-    }
 
-    @Override
-    public int[] getBoard() {
-        return board;
-    }
-
-    @Override
-    public int[][] getMatrix() {
-        return new int[0][];
-    }
-
-    @Override
-    public int coordsToBoard(int row, int col) {
-        return ((9 * row) + col);
-    }
 }
