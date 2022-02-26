@@ -1,5 +1,7 @@
 package sudoku;
 
+import utils.Point;
+
 public class SudokuSolver9x9 implements SudokuSolver {
 
     private int[][] board = new int[9][9];
@@ -10,7 +12,10 @@ public class SudokuSolver9x9 implements SudokuSolver {
     }
 
     @Override
-    public void add(int x, int y, int digit) {
+    public void add(Point point, int digit) {
+        int x = point.getX();
+        int y = point.getY();
+
         if (x < 0 || x > 8) {
             throw new IllegalArgumentException("illegal row input");
         } else if (y < 0 || y > 8) {
@@ -23,7 +28,10 @@ public class SudokuSolver9x9 implements SudokuSolver {
     }
 
     @Override
-    public void remove(int x, int y) {
+    public void remove(Point point) {
+        int x = point.getX();
+        int y = point.getY();
+
         if (x < 0 || x > 8) {
             throw new IllegalArgumentException("illegal row input");
         } else if (y < 0 || y > 8) {
@@ -34,7 +42,10 @@ public class SudokuSolver9x9 implements SudokuSolver {
     }
 
     @Override
-    public int get(int x, int y) {
+    public int get(Point point) {
+        int x = point.getX();
+        int y = point.getY();
+
         if (x < 0 || x > 8) {
             throw new IllegalArgumentException("illegal row input");
         } else if (y < 0 || y > 8) {
@@ -48,7 +59,7 @@ public class SudokuSolver9x9 implements SudokuSolver {
     public boolean isValid() {
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
-                if (!isValid(x, y)) {
+                if (!isValid(new Point(x,y))) {
                     return false;
                 }
             }
@@ -57,7 +68,10 @@ public class SudokuSolver9x9 implements SudokuSolver {
     }
 
     @Override
-    public boolean isValid(int x, int y) {
+    public boolean isValid(Point point) {
+        int x = point.getX();
+        int y = point.getY();
+
         if (board[x][y] == 0) return true;
 
         //row
@@ -69,10 +83,9 @@ public class SudokuSolver9x9 implements SudokuSolver {
         if (twoOccurrences(col, board[x][y])) return false;
 
         //region
-        int[] region = getBelongingRegion(x,y);
-        if (twoOccurrences(region, board[x][y])) return false;
+        int[] region = getBelongingRegion(new Point(x,y));
+        return  (!twoOccurrences(region, board[x][y]));
 
-        return true;
 
     }
 
@@ -94,12 +107,12 @@ public class SudokuSolver9x9 implements SudokuSolver {
     }
 
     @Override
-    public int[] getBelongingRegion(int x, int y) {
+    public int[] getBelongingRegion(Point point) {
         int[] region = new int[9];
 
         //coordinates of the first square in the region
-        int firstBoxX = (x / 3) * 3;
-        int firstBoxY = (y / 3) * 3;
+        int firstBoxX = (point.getX() / 3) * 3;
+        int firstBoxY = (point.getY() / 3) * 3;
 
         //loops through the
         for (int xPos = 0; xPos < 3; xPos++) {
@@ -130,14 +143,14 @@ public class SudokuSolver9x9 implements SudokuSolver {
     /**
      * Checks if there are 2 or more occurrences of testCase in array.
      *
-     * @param array array that is tested
+     * @param array    array that is tested
      * @param testCase value searched for
      * @return true if there are 2 or more occurrences of testCase
      */
     public boolean twoOccurrences(int[] array, int testCase) {
         int oc = 0;
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == testCase) {
+        for (int j : array) {
+            if (j == testCase) {
                 oc++;
             }
         }

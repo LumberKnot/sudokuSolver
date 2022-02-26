@@ -1,5 +1,7 @@
 package sudoku;
 
+import utils.Point;
+
 public interface SudokuSolver {
     /**
      * To be done
@@ -7,33 +9,30 @@ public interface SudokuSolver {
     boolean solve();
 
     /**
-     * Puts digit in the box x, col.
+     * Puts digit in the box at point
      *
-     * @param x     The row
-     * @param y     The column
+     * @param point coordinates where you want to insert
      * @param digit The digit to insert
      * @throws IllegalArgumentException if x, y or digit is outside the range [0,9]
      */
-    void add(int x, int y, int digit);
+    void add(Point point, int digit);
 
     /**
-     * Removes digit in box at x, y.
+     * Removes digit in box at point
      *
-     * @param x The row
-     * @param y The column
+     * @param point the point in the board
      * @throws IllegalArgumentException if x or y is outside the range [0,9]
      */
-    void remove(int x, int y);
+    void remove(Point point);
 
     /**
-     * Returns the value of the box at x, y. 0 if empty.
+     * Returns the value of the box at point. 0 if empty.
      *
-     * @param x The row
-     * @param y The column
-     * @return the value of the box at x, y. 0 if empty
+     * @param point the point in the board
+     * @return the value of the box at point. 0 if empty
      * @throws IllegalArgumentException if x or y is outside the range [0,9]
      */
-    int get(int x, int y);
+    int get(Point point);
 
     /**
      * Checks that all filled in digits follows the sudoku rules.
@@ -45,11 +44,10 @@ public interface SudokuSolver {
     /**
      * Checks that given box follows the sudoku rules.
      *
-     * @param x The row
-     * @param y The column
+     * @param point coordinates of the box
      * @return true if box at x,y complies with the rules
      */
-    boolean isValid(int x, int y);
+    boolean isValid(Point point);
 
     /**
      * Sets all boxes to 0
@@ -65,20 +63,19 @@ public interface SudokuSolver {
     void setMatrix(int[][] m);
 
     /**
-     * Returns the board as a 9X9 matrix.
+     * Returns the board as a matrix.
      *
-     * @return the board as a 9X9 matrix
+     * @return the board as a matrix
      */
     int[][] getMatrix();
 
     /**
      * Returns an array with all values in the region.
      *
-     * @param x The row
-     * @param y The column
+     * @param point The point
      * @return an array with all values in the region
      */
-    int[] getBelongingRegion(int x, int y);
+    int[] getBelongingRegion(Point point);
 
     /**
      * Returns an array with all the values in the row.

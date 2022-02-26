@@ -1,4 +1,4 @@
-package sudoku;
+package utils;
 
 import java.util.Objects;
 
