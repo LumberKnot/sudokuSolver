@@ -32,9 +32,10 @@ public class GUI {
                 field.setSize(width/9,  height/9);
                 int finalX = x;
                 int finalY = y;
-                field.addActionListener(e-> {
-                    System.out.println("(" + finalX + ", " + finalY + ") to " + ((JTextField)e.getSource()).getText());
-                });
+
+                field.addActionListener(e->
+                    System.out.println("(" + finalX + ", " + finalY + ") to " + ((JTextField)e.getSource()).getText())
+                );
                 gridPanel.add(field);
 
             }

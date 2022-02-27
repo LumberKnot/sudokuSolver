@@ -1,7 +1,5 @@
 package sudoku;
 
-import utils.Point;
-
 public interface SudokuSolver {
     /**
      * To be done
@@ -11,28 +9,31 @@ public interface SudokuSolver {
     /**
      * Puts digit in the box at point
      *
-     * @param point coordinates where you want to insert
+     * @param x     The row
+     * @param y     The column
      * @param digit The digit to insert
      * @throws IllegalArgumentException if x, y or digit is outside the range [0,9]
      */
-    void add(Point point, int digit);
+    void add(int x, int y, int digit);
 
     /**
      * Removes digit in box at point
      *
-     * @param point the point in the board
+     * @param x The row
+     * @param y The column
      * @throws IllegalArgumentException if x or y is outside the range [0,9]
      */
-    void remove(Point point);
+    void remove(int x, int y);
 
     /**
      * Returns the value of the box at point. 0 if empty.
      *
-     * @param point the point in the board
+     * @param x The row
+     * @param y The column
      * @return the value of the box at point. 0 if empty
      * @throws IllegalArgumentException if x or y is outside the range [0,9]
      */
-    int get(Point point);
+    int get(int x, int y);
 
     /**
      * Checks that all filled in digits follows the sudoku rules.
@@ -44,10 +45,11 @@ public interface SudokuSolver {
     /**
      * Checks that given box follows the sudoku rules.
      *
-     * @param point coordinates of the box
+     * @param x The row
+     * @param y The column
      * @return true if box at x,y complies with the rules
      */
-    boolean isValid(Point point);
+    boolean isValid(int x, int y);
 
     /**
      * Sets all boxes to 0
@@ -72,10 +74,11 @@ public interface SudokuSolver {
     /**
      * Returns an array with all values in the region.
      *
-     * @param point The point
+     * @param x The row
+     * @param y The column
      * @return an array with all values in the region
      */
-    int[] getBelongingRegion(Point point);
+    int[] getBelongingRegion(int x, int y);
 
     /**
      * Returns an array with all the values in the row.

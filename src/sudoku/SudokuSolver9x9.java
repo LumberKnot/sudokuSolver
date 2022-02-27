@@ -1,6 +1,8 @@
 package sudoku;
 
-import utils.Point;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class SudokuSolver9x9 implements SudokuSolver {
 
@@ -8,18 +10,48 @@ public class SudokuSolver9x9 implements SudokuSolver {
 
     @Override
     public boolean solve() {
+        if (isValid()){
+            return solve(0,0);
+        }
         return false;
     }
 
-    @Override
-    public void add(Point point, int digit) {
-        int x = point.getX();
-        int y = point.getY();
+    /*
+    helper function that recursively calls itself
+     */
+    private boolean solve(int x, int y) {
+        //basfall
+        if (y > 8) {
+            //whole board has been filled without isues
+            return true;
+        }
 
+        //normal case
+
+        // Player input
+        if (get(x,y) != 0) {
+            return solve((x == 8) ? 0 : x + 1, (x == 8) ? y + 1 : y);
+        }
+
+        //else : empty box
+        for (int test = 1; test <=9; test ++ ){
+            add(x,y,test);
+            if (isValid(x,y)) {
+                if (solve((x == 8)? 0 : x + 1, (x == 8)? y + 1 : y)) return true;
+            }
+        }
+        remove(x,y);
+        return false;
+
+    }
+
+
+    @Override
+    public void add(int x, int y, int digit) {
         if (x < 0 || x > 8) {
-            throw new IllegalArgumentException("illegal row input");
+            throw new IllegalArgumentException("illegal x input");
         } else if (y < 0 || y > 8) {
-            throw new IllegalArgumentException("illegal col input");
+            throw new IllegalArgumentException("illegal y input");
         } else if (digit < 0 || digit > 9) {
             throw new IllegalArgumentException("illegal digit input");
         }
@@ -28,24 +60,18 @@ public class SudokuSolver9x9 implements SudokuSolver {
     }
 
     @Override
-    public void remove(Point point) {
-        int x = point.getX();
-        int y = point.getY();
-
+    public void remove(int x, int y) {
         if (x < 0 || x > 8) {
-            throw new IllegalArgumentException("illegal row input");
+            throw new IllegalArgumentException("illegal x input");
         } else if (y < 0 || y > 8) {
-            throw new IllegalArgumentException("illegal col input");
+            throw new IllegalArgumentException("illegal y input");
         }
 
         board[x][y] = 0;
     }
 
     @Override
-    public int get(Point point) {
-        int x = point.getX();
-        int y = point.getY();
-
+    public int get(int x, int y) {
         if (x < 0 || x > 8) {
             throw new IllegalArgumentException("illegal row input");
         } else if (y < 0 || y > 8) {
@@ -59,7 +85,7 @@ public class SudokuSolver9x9 implements SudokuSolver {
     public boolean isValid() {
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
-                if (!isValid(new Point(x,y))) {
+                if (!isValid(x, y)) {
                     return false;
                 }
             }
@@ -68,10 +94,7 @@ public class SudokuSolver9x9 implements SudokuSolver {
     }
 
     @Override
-    public boolean isValid(Point point) {
-        int x = point.getX();
-        int y = point.getY();
-
+    public boolean isValid(int x, int y) {
         if (board[x][y] == 0) return true;
 
         //row
@@ -83,8 +106,8 @@ public class SudokuSolver9x9 implements SudokuSolver {
         if (twoOccurrences(col, board[x][y])) return false;
 
         //region
-        int[] region = getBelongingRegion(new Point(x,y));
-        return  (!twoOccurrences(region, board[x][y]));
+        int[] region = getBelongingRegion(x, y);
+        return (!twoOccurrences(region, board[x][y]));
 
 
     }
@@ -107,12 +130,12 @@ public class SudokuSolver9x9 implements SudokuSolver {
     }
 
     @Override
-    public int[] getBelongingRegion(Point point) {
+    public int[] getBelongingRegion(int x, int y) {
         int[] region = new int[9];
 
         //coordinates of the first square in the region
-        int firstBoxX = (point.getX() / 3) * 3;
-        int firstBoxY = (point.getY() / 3) * 3;
+        int firstBoxX = (x / 3) * 3;
+        int firstBoxY = (x / 3) * 3;
 
         //loops through the
         for (int xPos = 0; xPos < 3; xPos++) {
