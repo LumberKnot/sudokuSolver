@@ -1,16 +1,27 @@
 package sudoku;
 
+import gui.SudokuGUI;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
 public class SudokuSolver9x9 implements SudokuSolver {
 
+    private SudokuGUI gui;
     private int[][] board = new int[9][9];
+
+    public SudokuSolver9x9(SudokuGUI gui) {
+        this.gui = gui;
+    }
 
     @Override
     public boolean solve() {
-        System.out.println("solving");
+        //System.out.println(this);
+        //System.out.println("solving");
+        for(int x = 0; x < board.length;x++)
+            for(int y = 0; y < board[x].length;y++)
+                add(x,y, gui.textFieldBoard[x][y].getText());
         if (isValid()){
             return solve(0,0);
         }
@@ -22,10 +33,10 @@ public class SudokuSolver9x9 implements SudokuSolver {
     helper function that recursively calls itself
      */
     private boolean solve(int x, int y) {
-        System.out.println("Working on box at: ("+ x+ "," + y + ")");
+        //System.out.println("Working on box at: ("+ x+ "," + y + ")");
         //basfall
         if (y > 8) {
-            System.out.println("basfal \n" + this);
+            //System.out.println("basfal \n" + this);
             //whole board has been filled without isues
             return true;
         }
@@ -41,7 +52,8 @@ public class SudokuSolver9x9 implements SudokuSolver {
         for (int test = 1; test <=9; test ++ ){
             add(x,y,test);
             if (isValid(x,y)) {
-                if (solve((x == 8)? 0 : x + 1, (x == 8)? y + 1 : y)) return true;
+                if (solve((x == 8)? 0 : x + 1, (x == 8)? y + 1 : y))
+                    return true;
             }
         }
         remove(x,y);
@@ -58,17 +70,22 @@ public class SudokuSolver9x9 implements SudokuSolver {
         } else if (digit < 0 || digit > 9) {
             throw new IllegalArgumentException("illegal digit input");
         }
-
+        //System.out.println(String.format("Added %d at (%d,%d)", digit, x, y));
         board[x][y] = digit;
     }
 
     @Override
     public void add(int x, int y, String digit) {
-        try {
-            add(x,y,Integer.parseInt(digit));
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Input is not a number");
+        //System.out.println(digit);
+        if(digit.equals("")) {
+            add(x, y, 0);
         }
+        else
+            try {
+                add(x,y,Integer.parseInt(digit));
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Input is not a number");
+            }
     }
 
     @Override
@@ -78,7 +95,6 @@ public class SudokuSolver9x9 implements SudokuSolver {
         } else if (y < 0 || y > 8) {
             throw new IllegalArgumentException("illegal y input");
         }
-
         board[x][y] = 0;
     }
 
@@ -146,7 +162,7 @@ public class SudokuSolver9x9 implements SudokuSolver {
 
         //coordinates of the first square in the region
         int firstBoxX = (x / 3) * 3;
-        int firstBoxY = (x / 3) * 3;
+        int firstBoxY = (y / 3) * 3;
 
         //loops through the
         for (int xPos = 0; xPos < 3; xPos++) {

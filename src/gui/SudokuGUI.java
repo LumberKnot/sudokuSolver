@@ -8,8 +8,8 @@ import java.awt.*;
 
 public class SudokuGUI {
     int regionSide = 3;
-    SudokuSolver9x9 sudoku = new SudokuSolver9x9();
-    JTextField[][] textFieldBoard = new JTextField[9][9];
+    SudokuSolver9x9 sudoku = new SudokuSolver9x9(this);
+    public JTextField[][] textFieldBoard = new JTextField[9][9];
 
 
     public SudokuGUI(String title, int width, int height) {
@@ -31,7 +31,6 @@ public class SudokuGUI {
             for (int y = 0; y < textFieldBoard[x].length; y++) {
                 JTextField field = new JTextField(1);
                 textFieldBoard[x][y] = field;
-
                 field.setFont(new Font("Comic Sans MS", Font.BOLD, 25));
                 field.setHorizontalAlignment(JTextField.CENTER);
                 if (isColoredRegion(x, y))
@@ -40,8 +39,10 @@ public class SudokuGUI {
                 int finalX = x;
                 int finalY = y;
 
-                field.addActionListener(e ->
-                    sudoku.add(finalX, finalY, ((JTextField) e.getSource()).getText())
+                field.addActionListener(e -> {
+                            sudoku.add(finalX, finalY, ((JTextField) e.getSource()).getText());
+                            System.out.println("ACTION");
+                        }
                 );
                 gridPanel.add(field);
 
@@ -99,6 +100,13 @@ public class SudokuGUI {
 
             }
         }
+    }
+
+    public void setText(int x, int y, int n){
+        textFieldBoard[x][y].setText(String.valueOf(n));
+    }
+    public void remove(int x, int y){
+        textFieldBoard[x][y].setText("");
     }
 
 
