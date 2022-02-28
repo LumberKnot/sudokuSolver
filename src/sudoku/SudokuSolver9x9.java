@@ -1,11 +1,8 @@
 package sudoku;
 
-import gui.SudokuGUI;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 public class SudokuSolver9x9 implements SudokuSolver {
 
@@ -13,8 +10,6 @@ public class SudokuSolver9x9 implements SudokuSolver {
 
     @Override
     public boolean solve(JTextField[][] textFields) {
-        //System.out.println(this);
-        //System.out.println("solving");
         for(int x = 0; x < board.length;x++)
             for(int y = 0; y < board[x].length;y++)
                 add(x,y, textFields[x][y].getText());
@@ -71,7 +66,7 @@ public class SudokuSolver9x9 implements SudokuSolver {
     }
 
     @Override
-    public void add(int x, int y, String digit) {
+    public void add(int x, int y, @NotNull String digit) {
         //System.out.println(digit);
         if(digit.equals("")) {
             add(x, y, 0);
