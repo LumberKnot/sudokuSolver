@@ -10,9 +10,11 @@ public class SudokuSolver9x9 implements SudokuSolver {
 
     @Override
     public boolean solve() {
+        System.out.println("solving");
         if (isValid()){
             return solve(0,0);
         }
+        System.out.println("didn wokr");
         return false;
     }
 
@@ -20,8 +22,10 @@ public class SudokuSolver9x9 implements SudokuSolver {
     helper function that recursively calls itself
      */
     private boolean solve(int x, int y) {
+        System.out.println("Working on box at: ("+ x+ "," + y + ")");
         //basfall
         if (y > 8) {
+            System.out.println("basfal \n" + this);
             //whole board has been filled without isues
             return true;
         }
@@ -56,6 +60,15 @@ public class SudokuSolver9x9 implements SudokuSolver {
         }
 
         board[x][y] = digit;
+    }
+
+    @Override
+    public void add(int x, int y, String digit) {
+        try {
+            add(x,y,Integer.parseInt(digit));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Input is not a number");
+        }
     }
 
     @Override
@@ -180,8 +193,8 @@ public class SudokuSolver9x9 implements SudokuSolver {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        for (int y = 0; y <= 8; y++) {
-            for (int x = 0; x <= 8; x++) {
+        for (int x = 0; x <= 8; x++) {
+            for (int y = 0; y <= 8; y++) {
                 builder.append(get(x,y));builder.append(" ");
             }
             builder.append('\n');

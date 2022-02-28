@@ -17,11 +17,21 @@ public interface SudokuSolver {
     void add(int x, int y, int digit);
 
     /**
+     * Puts digit in the box at point
+     *
+     * @param x     The row
+     * @param y     The column
+     * @param digit The digit to insert
+     * @throws IllegalArgumentException if x, y or digit is outside the range [0,9]
+     */
+    void add(int x, int y, String digit);
+
+    /**
      * Removes digit in box at point
      *
      * @param x The row
      * @param y The column
-     * @throws IllegalArgumentException if x or y is outside the range [0,9]
+     * @throws IllegalArgumentException if x or y is outside the range [0,9] string can't be parsed to int
      */
     void remove(int x, int y);
 

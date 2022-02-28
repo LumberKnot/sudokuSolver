@@ -1,4 +1,5 @@
 package gui;
+
 import sudoku.SudokuSolver9x9;
 
 import javax.swing.*;
@@ -8,6 +9,7 @@ import java.awt.*;
 public class SudokuGUI {
     int regionSide = 3;
     SudokuSolver9x9 sudoku = new SudokuSolver9x9();
+    JTextField[][] textFieldBoard = new JTextField[9][9];
 
 
     public SudokuGUI(String title, int width, int height) {
@@ -22,36 +24,82 @@ public class SudokuGUI {
         JFrame frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel gridPanel = new JPanel();
-        gridPanel.setLayout(new GridLayout(9,9));
-        JTextField[][] board = new JTextField[9][9];
+        gridPanel.setLayout(new GridLayout(9, 9));
 
-        for(int x = 0; x < board.length; x++){
-            for(int y = 0; y < board[x].length; y++){
+        //create boxes
+        for (int x = 0; x < textFieldBoard.length; x++) {
+            for (int y = 0; y < textFieldBoard[x].length; y++) {
                 JTextField field = new JTextField(1);
+                textFieldBoard[x][y] = field;
+
                 field.setFont(new Font("Comic Sans MS", Font.BOLD, 25));
                 field.setHorizontalAlignment(JTextField.CENTER);
-                if(isColoredRegion(x, y))
+                if (isColoredRegion(x, y))
                     field.setBackground(Color.ORANGE);
-                field.setSize(width/9,  height/9);
+                field.setSize(width / 9, height / 9);
                 int finalX = x;
                 int finalY = y;
 
-                field.addActionListener(e-> sudoku.add(finalX,finalY, Integer.parseInt(((JTextField)e.getSource()).getText()))
+                field.addActionListener(e ->
+                    sudoku.add(finalX, finalY, ((JTextField) e.getSource()).getText())
                 );
                 gridPanel.add(field);
-
 
 
             }
         }
         frame.setPreferredSize(new Dimension(width, height));
-        frame.add(gridPanel);
+        frame.add(gridPanel, BorderLayout.CENTER);
+
+        JPanel buttonPannel = new JPanel();
+
+        //clear button
+        JButton clearButton = new JButton("CLEAR");
+        clearButton.addActionListener(e -> {
+            sudoku.clear();
+            fillBoard(sudoku.getMatrix());
+        });
+
+        //Solve button
+        JButton solveButton = new JButton("SOLVE");
+        solveButton.addActionListener(e -> {
+            sudoku.solve();
+            fillBoard(sudoku.getMatrix());
+        });
+
+        buttonPannel.add(clearButton);
+        buttonPannel.add(solveButton);
+
+        frame.add(buttonPannel, BorderLayout.SOUTH);
+
+
         frame.pack();
         frame.setVisible(true);
     }
 
-    private boolean isColoredRegion(int x, int y){
-        x/=3; y/=3;
-        return (y*regionSide + x)%2 == 1;
+    private boolean isColoredRegion(int x, int y) {
+        x /= 3;
+        y /= 3;
+        return (y * regionSide + x) % 2 == 1;
     }
+
+    /*
+    Fills the text fields with a given matrix m
+    Empty string if a box has a 0
+     */
+    private void fillBoard(int[][] m) {
+        for (int x = 0; x <= 8; x++) {
+            for (int y = 0; y <= 8; y++) {
+                if (m[x][y] != 0) {
+                    textFieldBoard[x][y].setText(String.valueOf(m[x][y]));
+                }
+                else{
+                    textFieldBoard[x][y].setText("");
+                }
+
+            }
+        }
+    }
+
+
 }
