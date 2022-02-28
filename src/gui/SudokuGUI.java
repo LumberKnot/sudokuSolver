@@ -1,13 +1,16 @@
 package gui;
+import sudoku.SudokuSolver9x9;
+
 import javax.swing.*;
 import java.awt.*;
 
 
-public class GUI {
+public class SudokuGUI {
     int regionSide = 3;
+    SudokuSolver9x9 sudoku = new SudokuSolver9x9();
 
 
-    public GUI(String title, int width, int height) {
+    public SudokuGUI(String title, int width, int height) {
         SwingUtilities.invokeLater(() -> createWindow(title, width, height));
     }
 
@@ -33,10 +36,11 @@ public class GUI {
                 int finalX = x;
                 int finalY = y;
 
-                field.addActionListener(e->
-                    System.out.println("(" + finalX + ", " + finalY + ") to " + ((JTextField)e.getSource()).getText())
+                field.addActionListener(e-> sudoku.add(finalX,finalY, Integer.parseInt(((JTextField)e.getSource()).getText()))
                 );
                 gridPanel.add(field);
+
+
 
             }
         }

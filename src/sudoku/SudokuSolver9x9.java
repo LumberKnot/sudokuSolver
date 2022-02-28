@@ -45,7 +45,6 @@ public class SudokuSolver9x9 implements SudokuSolver {
 
     }
 
-
     @Override
     public void add(int x, int y, int digit) {
         if (x < 0 || x > 8) {
@@ -123,7 +122,6 @@ public class SudokuSolver9x9 implements SudokuSolver {
         board = m;
     }
 
-
     @Override
     public int[][] getMatrix() {
         return board;
@@ -162,7 +160,6 @@ public class SudokuSolver9x9 implements SudokuSolver {
         return board[x];
     }
 
-
     /**
      * Checks if there are 2 or more occurrences of testCase in array.
      *
@@ -178,6 +175,18 @@ public class SudokuSolver9x9 implements SudokuSolver {
             }
         }
         return (oc >= 2);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (int y = 0; y <= 8; y++) {
+            for (int x = 0; x <= 8; x++) {
+                builder.append(get(x,y));builder.append(" ");
+            }
+            builder.append('\n');
+        }
+        return builder.toString();
     }
 }
 
