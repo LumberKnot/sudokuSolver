@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class SudokuGUI {
     int regionSide = 3;
-    SudokuSolver9x9 sudoku = new SudokuSolver9x9(this);
+    SudokuSolver9x9 sudoku = new SudokuSolver9x9();
     public JTextField[][] textFieldBoard = new JTextField[9][9];
 
 
@@ -36,21 +36,7 @@ public class SudokuGUI {
                 if (isColoredRegion(x, y))
                     field.setBackground(Color.ORANGE);
                 field.setSize(width / 9, height / 9);
-                int finalX = x;
-                int finalY = y;
 
-                /*field.addActionListener(e -> {
-                            sudoku.add(finalX, finalY, ((JTextField) e.getSource()).getText());
-                            System.out.println("ACTION");
-                        }
-                );
-
-                field.addPropertyChangeListener(e -> {
-                    sudoku.add(finalX, finalY, ((JTextField) e.getSource()).getText());
-                    System.out.println("kord " + finalX + ", " + finalY);
-                });
-
-                 */
 
                 gridPanel.add(field);
 
@@ -72,8 +58,11 @@ public class SudokuGUI {
         //Solve button
         JButton solveButton = new JButton("SOLVE");
         solveButton.addActionListener(e -> {
-            sudoku.solve();
-            fillBoard(sudoku.getMatrix());
+            if(sudoku.solve(textFieldBoard))
+                fillBoard(sudoku.getMatrix());
+            else{
+                System.out.println("U suky fuky");
+            }
         });
 
         buttonPannel.add(clearButton);

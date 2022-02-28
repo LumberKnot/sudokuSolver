@@ -1,10 +1,12 @@
 package sudoku;
 
+import javax.swing.*;
+
 public interface SudokuSolver {
     /**
      * To be done
      */
-    boolean solve();
+    boolean solve(JTextField[][] m);
 
     /**
      * Puts digit in the box at point

@@ -2,26 +2,22 @@ package sudoku;
 
 import gui.SudokuGUI;
 
+import javax.swing.*;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
 public class SudokuSolver9x9 implements SudokuSolver {
 
-    private SudokuGUI gui;
     private int[][] board = new int[9][9];
 
-    public SudokuSolver9x9(SudokuGUI gui) {
-        this.gui = gui;
-    }
-
     @Override
-    public boolean solve() {
+    public boolean solve(JTextField[][] textFields) {
         //System.out.println(this);
         //System.out.println("solving");
         for(int x = 0; x < board.length;x++)
             for(int y = 0; y < board[x].length;y++)
-                add(x,y, gui.textFieldBoard[x][y].getText());
+                add(x,y, textFields[x][y].getText());
         if (isValid()){
             return solve(0,0);
         }
