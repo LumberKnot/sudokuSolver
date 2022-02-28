@@ -39,11 +39,19 @@ public class SudokuGUI {
                 int finalX = x;
                 int finalY = y;
 
-                field.addActionListener(e -> {
+                /*field.addActionListener(e -> {
                             sudoku.add(finalX, finalY, ((JTextField) e.getSource()).getText());
                             System.out.println("ACTION");
                         }
                 );
+
+                field.addPropertyChangeListener(e -> {
+                    sudoku.add(finalX, finalY, ((JTextField) e.getSource()).getText());
+                    System.out.println("kord " + finalX + ", " + finalY);
+                });
+
+                 */
+
                 gridPanel.add(field);
 
 
