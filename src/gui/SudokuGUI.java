@@ -58,10 +58,16 @@ public class SudokuGUI {
         //Solve button
         JButton solveButton = new JButton("SOLVE");
         solveButton.addActionListener(e -> {
-            if(sudoku.solve(textFieldBoard))
-                fillBoard(sudoku.getMatrix());
-            else{
-                System.out.println("U suky fuky");
+            try {
+                if (sudoku.solve(textFieldBoard))
+                    fillBoard(sudoku.getMatrix());
+                else {
+                    JFrame failFrame = new JFrame("Failure");
+                    JOptionPane.showMessageDialog(failFrame, "No solutions to this sudoku exists");
+                }
+            } catch (IllegalArgumentException exception){
+                JFrame failureFrame=new JFrame();
+                JOptionPane.showMessageDialog(failureFrame,"Illegal Input","Failure",JOptionPane.WARNING_MESSAGE);
             }
         });
 
@@ -90,8 +96,7 @@ public class SudokuGUI {
             for (int y = 0; y <= 8; y++) {
                 if (m[x][y] != 0) {
                     textFieldBoard[x][y].setText(String.valueOf(m[x][y]));
-                }
-                else{
+                } else {
                     textFieldBoard[x][y].setText("");
                 }
 
@@ -99,10 +104,11 @@ public class SudokuGUI {
         }
     }
 
-    public void setText(int x, int y, int n){
+    public void setText(int x, int y, int n) {
         textFieldBoard[x][y].setText(String.valueOf(n));
     }
-    public void remove(int x, int y){
+
+    public void remove(int x, int y) {
         textFieldBoard[x][y].setText("");
     }
 
