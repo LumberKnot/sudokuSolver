@@ -24,10 +24,8 @@ public class SudokuSolver9x9 implements SudokuSolver {
     helper function that recursively calls itself
      */
     private boolean solve(int x, int y) {
-        //System.out.println("Working on box at: ("+ x+ "," + y + ")");
         //basfall
         if (y > 8) {
-            //System.out.println("basfal \n" + this);
             //whole board has been filled without isues
             return true;
         }
@@ -61,13 +59,11 @@ public class SudokuSolver9x9 implements SudokuSolver {
         } else if (digit < 0 || digit > 9) {
             throw new IllegalArgumentException("illegal digit input");
         }
-        //System.out.println(String.format("Added %d at (%d,%d)", digit, x, y));
         board[x][y] = digit;
     }
 
     @Override
     public void add(int x, int y, @NotNull String digit) {
-        //System.out.println(digit);
         if(digit.equals("")) {
             add(x, y, 0);
         }
@@ -131,7 +127,6 @@ public class SudokuSolver9x9 implements SudokuSolver {
 
     }
 
-
     @Override
     public void clear() {
         board = new int[9][9];
@@ -187,7 +182,7 @@ public class SudokuSolver9x9 implements SudokuSolver {
      * @param testCase value searched for
      * @return true if there are 2 or more occurrences of testCase
      */
-    public boolean twoOccurrences(int[] array, int testCase) {
+    private boolean twoOccurrences(int[] array, int testCase) {
         int oc = 0;
         for (int j : array) {
             if (j == testCase) {
