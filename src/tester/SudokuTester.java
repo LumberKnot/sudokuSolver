@@ -49,24 +49,17 @@ public class SudokuTester {
         sudoku.add(0,0,9);
         sudoku.add(1,1,9);
 
-<<<<<<< HEAD
+
         assertFalse(sudoku.isValid(), "Region doesn't work");
         assertFalse(sudoku.isValid(5,6), "Region doesn't work");
-=======
-        assertFalse(sudoku.isValid(), "Region doesnt work");
-        assertFalse(sudoku.isValid(5,6), "Region doesnt work");
->>>>>>> origin/main
 
         sudoku.clear();
 
         sudoku.add(0,0,9);
         sudoku.add(1,1,8);
 
-<<<<<<< HEAD
         assertTrue(sudoku.isValid(), "Region doesn't work");
-=======
-        assertTrue(sudoku.isValid(), "Region doesnt work");
->>>>>>> origin/main
+
 
     }
 
