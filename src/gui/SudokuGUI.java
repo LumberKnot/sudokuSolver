@@ -8,9 +8,10 @@ import java.awt.*;
 
 
 public class SudokuGUI {
+
     private int regionSide = 3;
-    private SudokuSolver sudoku = new SudokuSolver9x9();
-    private JTextField[][] textFieldBoard = new JTextField[9][9];
+    private final SudokuSolver sudoku = new SudokuSolver9x9();
+    private final JTextField[][] textFieldBoard = new JTextField[9][9];
 
 
     public SudokuGUI(String title, int width, int height) {
