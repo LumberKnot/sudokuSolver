@@ -4,9 +4,11 @@ import javax.swing.*;
 
 public interface SudokuSolver {
     /**
-     * To be done
+     * Solves the board if the input is valid
+     *
+     * @return true if the board is solvable
      */
-    boolean solve(JTextField[][] m);
+    boolean solve();
 
     /**
      * Puts digit in the box at point
@@ -27,6 +29,14 @@ public interface SudokuSolver {
      * @throws IllegalArgumentException if x, y or digit is outside the range [0,9]
      */
     void add(int x, int y, String digit);
+
+    /**
+     * Adds all numbers from a JTextField matrix.
+     *
+     * @param m The input matrix
+     * @throws IllegalArgumentException if a field contains a number not in [1,9] or a non convertible string
+     */
+    void addAll(JTextField[][] m);
 
     /**
      * Removes digit in box at point

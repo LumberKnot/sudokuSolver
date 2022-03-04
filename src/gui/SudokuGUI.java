@@ -26,7 +26,7 @@ public class SudokuGUI {
         JPanel gridPanel = new JPanel();
         gridPanel.setLayout(new GridLayout(9, 9));
 
-        //create boxes
+        //create boxes -------------------------------------------------------------------------------------------------
         for (int x = 0; x < textFieldBoard.length; x++) {
             for (int y = 0; y < textFieldBoard[x].length; y++) {
                 JTextField field = new JTextField(1);
@@ -46,7 +46,9 @@ public class SudokuGUI {
         frame.setPreferredSize(new Dimension(width, height));
         frame.add(gridPanel, BorderLayout.CENTER);
 
-        JPanel buttonPannel = new JPanel();
+
+        //Create Buttons -----------------------------------------------------------------------------------------------
+        JPanel buttonPanel = new JPanel();
 
         //clear button
         JButton clearButton = new JButton("CLEAR");
@@ -59,24 +61,35 @@ public class SudokuGUI {
         JButton solveButton = new JButton("SOLVE");
         solveButton.addActionListener(e -> {
             try {
-                if (sudoku.solve(textFieldBoard))
-                    fillBoard(sudoku.getMatrix());
-                else {
-                    JFrame failFrame = new JFrame("Failure");
-                    JOptionPane.showMessageDialog(failFrame, "No solutions to this sudoku exists");
+                sudoku.addAll(textFieldBoard);
+
+                if (sudoku.isValid()) {
+                    if (sudoku.solve())
+                        fillBoard(sudoku.getMatrix());
+                    else {
+                        JFrame failFrame = new JFrame("Failure");
+                        JOptionPane.showMessageDialog(failFrame, "No solutions to this sudoku exists");
+                    }
+
+                } else {
+                    JFrame failureFrame = new JFrame();
+                    JOptionPane.showMessageDialog(failureFrame, "The inputted Sudoku is not valid");
                 }
-            } catch (IllegalArgumentException exception){
-                JFrame failureFrame=new JFrame();
-                JOptionPane.showMessageDialog(failureFrame,"Illegal Input","Failure",JOptionPane.WARNING_MESSAGE);
+
+            } catch (IllegalArgumentException exception) {
+                JFrame failureFrame = new JFrame();
+                JOptionPane.showMessageDialog(failureFrame, "Illegal Input", "Failure", JOptionPane.WARNING_MESSAGE);
             }
+
+
         });
 
-        buttonPannel.add(clearButton);
-        buttonPannel.add(solveButton);
+        buttonPanel.add(clearButton);
+        buttonPanel.add(solveButton);
 
-        frame.add(buttonPannel, BorderLayout.SOUTH);
+        frame.add(buttonPanel, BorderLayout.SOUTH);
 
-
+        //Displaying ---------------------------------------------------------------------------------------------------
         frame.pack();
         frame.setVisible(true);
     }

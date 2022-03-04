@@ -9,14 +9,10 @@ public class SudokuSolver9x9 implements SudokuSolver {
     private int[][] board = new int[9][9];
 
     @Override
-    public boolean solve(JTextField[][] textFields) {
-        for(int x = 0; x < board.length;x++)
-            for(int y = 0; y < board[x].length;y++)
-                add(x,y, textFields[x][y].getText());
+    public boolean solve() {
         if (isValid()){
             return solve(0,0);
         }
-        System.out.println("didn wokr");
         return false;
     }
 
@@ -24,9 +20,9 @@ public class SudokuSolver9x9 implements SudokuSolver {
     helper function that recursively calls itself
      */
     private boolean solve(int x, int y) {
-        //basfall
+        //base case
         if (y > 8) {
-            //whole board has been filled without isues
+            //whole board has been filled without issues
             return true;
         }
 
@@ -73,6 +69,13 @@ public class SudokuSolver9x9 implements SudokuSolver {
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("Input is not a number");
             }
+    }
+
+    @Override
+    public void addAll(JTextField[][] textFields) {
+        for(int x = 0; x < board.length;x++)
+            for(int y = 0; y < board[x].length;y++)
+                add(x,y, textFields[x][y].getText());
     }
 
     @Override
