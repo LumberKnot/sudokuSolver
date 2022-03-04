@@ -42,6 +42,64 @@ public class sudokuTester {
         assertThrows(IllegalArgumentException.class ,() -> sudoku.add(1,7,10), "Incorrect exception/ no exception");
         assertThrows(IllegalArgumentException.class ,() -> sudoku.add(9,7,1),  "Incorrect exception/ no exception");
         assertThrows(IllegalArgumentException.class ,() -> sudoku.add(1,9,1),  "Incorrect exception/ no exception");
+
+        assertDoesNotThrow(() -> sudoku.add(0,0,"5"), "String input works");
+        assertThrows(IllegalArgumentException.class ,() -> sudoku.add(1,9,"a"),  "Incorrect exception/ no exception");
+    }
+
+    @Test
+    public void testSetMatrix(){
+
+        int[][] valBoard = new int[][]{ //incorrect value
+                {100,3,1,7,2,6,4,8,9},
+                {4,7,9,8,5,3,1,6,2},
+                {8,6,2,4,9,1,5,7,3},
+                {1,8,5,2,3,9,6,4,7},
+                {7,2,6,1,8,4,9,3,5},
+                {9,4,3,6,7,5,8,2,1},
+                {3,9,8,5,6,7,2,1,4},
+                {6,1,7,9,4,2,3,5,8},
+                {2,5,4,3,1,8,7,9,6}
+        };
+
+        int[][] sizeBoardCol = new int[][]{ //only 8 columns
+                {5,3,1,7,2,6,4,8,9},
+                {4,7,9,8,5,3,1,6,2},
+                {8,6,2,4,9,1,5,7,3},
+                {1,8,5,2,3,9,6,4,7},
+                {7,2,6,1,8,4,9,3,5},
+                {9,4,3,6,7,5,8,2,1},
+                {3,9,8,5,6,7,2,1,4},
+                {6,1,7,9,4,2,3,5,8}
+        };
+        int[][] sizeBoardRows = new int[][]{ //10 rowns
+                {5,3,1,7,2,6,4,8,9,1},
+                {4,7,9,8,5,3,1,6,2,1},
+                {8,6,2,4,9,1,5,7,3,1},
+                {1,8,5,2,3,9,6,4,7,1},
+                {7,2,6,1,8,4,9,3,5,1},
+                {9,4,3,6,7,5,8,2,1,1},
+                {3,9,8,5,6,7,2,1,4,1},
+                {6,1,7,9,4,2,3,5,8,1},
+                {2,5,4,3,1,8,7,9,6,1}
+        };
+
+        int[][] correctBoard = new int[][]{
+                {5,3,1,7,2,6,4,8,9},
+                {4,7,9,8,5,3,1,6,2},
+                {8,6,2,4,9,1,5,7,3},
+                {1,8,5,2,3,9,6,4,7},
+                {7,2,6,1,8,4,9,3,5},
+                {9,4,3,6,7,5,8,2,1},
+                {3,9,8,5,6,7,2,1,4},
+                {6,1,7,9,4,2,3,5,8},
+                {2,5,4,3,1,8,7,9,6}
+        };
+
+        assertThrows(IllegalArgumentException.class, () -> sudoku.setMatrix(valBoard));
+        assertThrows(IllegalArgumentException.class, () -> sudoku.setMatrix(sizeBoardCol));
+        assertThrows(IllegalArgumentException.class, () -> sudoku.setMatrix(sizeBoardRows));
+        assertDoesNotThrow(() -> sudoku.setMatrix(correctBoard));
     }
 
     @Test
@@ -66,6 +124,8 @@ public class sudokuTester {
         sudoku.add(1,1,8);
 
         assertTrue(sudoku.isValid(), "Region doesn't work");
+
+        assertThrows(IllegalArgumentException.class, () -> sudoku.isValid(9,9),"Can test outside of range");
 
 
     }
@@ -130,9 +190,26 @@ public class sudokuTester {
 
     }
 
+    @Test
+    public void unsolvableSudoku(){
 
+        sudoku.setMatrix(new int[][]{
+                {1,0,3,4,5,6,7,8,9},
+                {0,2,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0},
+        });
 
+        assertTrue(sudoku.isValid(),"Nota valid sudoku => this test proves nothing");
 
+        assertFalse(sudoku.solve(), "Should not be solvable");
+
+    }
 
 
 }

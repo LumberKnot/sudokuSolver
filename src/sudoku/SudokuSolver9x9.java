@@ -113,6 +113,12 @@ public class SudokuSolver9x9 implements SudokuSolver {
 
     @Override
     public boolean isValid(int x, int y) {
+        if (x < 0 || x > 8) {
+            throw new IllegalArgumentException("illegal x input");
+        } else if (y < 0 || y > 8) {
+            throw new IllegalArgumentException("illegal y input");
+        }
+
         if (board[x][y] == 0) return true;
 
         //row
@@ -137,6 +143,22 @@ public class SudokuSolver9x9 implements SudokuSolver {
 
     @Override
     public void setMatrix(int[][] m) {
+        //Check size-------------------
+        if(m.length != 9){
+            throw new IllegalArgumentException("Matrix has incorrect amount of columns");
+        }
+        for (int[] ar: m) {
+            if (ar.length != 9) throw new IllegalArgumentException("Matrix has incorrect amount of rows");
+        }
+
+        //checks content
+        for(int[] ar : m){
+            for(int i : ar){
+                if (i < 0 || i > 9) {
+                    throw new IllegalArgumentException("Matrix has incorrect values");}
+            }
+        }
+
         board = m;
     }
 
@@ -147,6 +169,12 @@ public class SudokuSolver9x9 implements SudokuSolver {
 
     @Override
     public int[] getBelongingRegion(int x, int y) {
+        if (x < 0 || x > 8) {
+            throw new IllegalArgumentException("illegal x input");
+        } else if (y < 0 || y > 8) {
+            throw new IllegalArgumentException("illegal y input");
+        }
+
         int[] region = new int[9];
 
         //coordinates of the first square in the region
@@ -165,6 +193,9 @@ public class SudokuSolver9x9 implements SudokuSolver {
 
     @Override
     public int[] getBelongingRow(int y) {
+        if (y < 0 || y > 8) {
+            throw new IllegalArgumentException("illegal y input");
+        }
         int[] row = new int[9];
 
         for (int x = 0; x < 9; x++) {
@@ -175,6 +206,10 @@ public class SudokuSolver9x9 implements SudokuSolver {
 
     @Override
     public int[] getBelongingColumn(int x) {
+        if (x < 0 || x > 8) {
+            throw new IllegalArgumentException("illegal x input");
+        }
+
         return board[x];
     }
 
