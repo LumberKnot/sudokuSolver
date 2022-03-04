@@ -102,7 +102,7 @@ public interface SudokuSolver {
      * @return an array with all values in the region
      * @throws IllegalArgumentException if x or y is outside the range [0,8]
      */
-    int[] getBelongingRegion(int x, int y);
+    int[] getRegion(int x, int y);
 
     /**
      * Returns an array with all the values in the row.
@@ -111,7 +111,7 @@ public interface SudokuSolver {
      * @return an array with all the values in the row
      * @throws IllegalArgumentException if y is outside the range [0,8]
      */
-    int[] getBelongingRow(int y);
+    int[] getRow(int y);
 
     /**
      * Returns an array with all the values in the column.
@@ -120,7 +120,7 @@ public interface SudokuSolver {
      * @return an array with all the values in the row
      * @throws IllegalArgumentException if x is outside the range [0,8]
      */
-    int[] getBelongingColumn(int x);
+    int[] getColumn(int x);
 
 
 }

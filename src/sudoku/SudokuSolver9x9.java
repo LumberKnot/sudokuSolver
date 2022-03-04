@@ -122,15 +122,15 @@ public class SudokuSolver9x9 implements SudokuSolver {
         if (board[x][y] == 0) return true;
 
         //row
-        int[] row = getBelongingRow(y);
+        int[] row = getRow(y);
         if (twoOccurrences(row, board[x][y])) return false;
 
         //column
-        int[] col = getBelongingColumn(x);
+        int[] col = getColumn(x);
         if (twoOccurrences(col, board[x][y])) return false;
 
         //region
-        int[] region = getBelongingRegion(x, y);
+        int[] region = getRegion(x, y);
         return (!twoOccurrences(region, board[x][y]));
 
 
@@ -168,7 +168,7 @@ public class SudokuSolver9x9 implements SudokuSolver {
     }
 
     @Override
-    public int[] getBelongingRegion(int x, int y) {
+    public int[] getRegion(int x, int y) {
         if (x < 0 || x > 8) {
             throw new IllegalArgumentException("illegal x input");
         } else if (y < 0 || y > 8) {
@@ -192,7 +192,7 @@ public class SudokuSolver9x9 implements SudokuSolver {
     }
 
     @Override
-    public int[] getBelongingRow(int y) {
+    public int[] getRow(int y) {
         if (y < 0 || y > 8) {
             throw new IllegalArgumentException("illegal y input");
         }
@@ -205,7 +205,7 @@ public class SudokuSolver9x9 implements SudokuSolver {
     }
 
     @Override
-    public int[] getBelongingColumn(int x) {
+    public int[] getColumn(int x) {
         if (x < 0 || x > 8) {
             throw new IllegalArgumentException("illegal x input");
         }

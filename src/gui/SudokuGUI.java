@@ -1,5 +1,6 @@
 package gui;
 
+import sudoku.SudokuSolver;
 import sudoku.SudokuSolver9x9;
 
 import javax.swing.*;
@@ -8,7 +9,7 @@ import java.awt.*;
 
 public class SudokuGUI {
     int regionSide = 3;
-    SudokuSolver9x9 sudoku = new SudokuSolver9x9();
+    SudokuSolver sudoku = new SudokuSolver9x9();
     public JTextField[][] textFieldBoard = new JTextField[9][9];
 
 
